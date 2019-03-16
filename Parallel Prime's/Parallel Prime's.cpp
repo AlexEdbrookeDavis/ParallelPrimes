@@ -59,7 +59,7 @@ int main()
 
 	// The data
 	array<int, NumberCount> data;
-	for (int i = 1; i < data.size(); i++) {
+	for (int i = 1; i < NumberCount; i++) {
 		data.at(i) = i;
 	}
 
@@ -74,7 +74,7 @@ int main()
 
 	auto start1 = chrono::steady_clock::now();
 
-	for (int i = 1; i < data.size(); i++) {
+	for (int i = 1; i < NumberCount; i++) {
 		isPrime1.at(i) = IsPrime(i);
 	}
 
@@ -82,7 +82,7 @@ int main()
 	double elapsed_seconds1 = chrono::duration_cast<
 		chrono::duration<double>>(finish1 - start1).count();
 
-	cout << "Runtime of linear primality check: " << elapsed_seconds1 << endl;
+	cout << "Runtime of linear primality check: " << elapsed_seconds1 << " seconds." << endl;
 
 	// ---------------------------------------------------------------------
 	// Part 2: running with 2 manually implemented parallel threads
@@ -107,7 +107,7 @@ int main()
 	double elapsed_seconds2 = chrono::duration_cast<
 		chrono::duration<double>>(finish2 - start2).count();
 
-	cout << "Runtime of dual thread primality check: " << elapsed_seconds2 << endl;
+	cout << "Runtime of dual thread primality check: " << elapsed_seconds2 << " seconds." << endl;
 
 	// ---------------------------------------------------------------------
 	// Part 3: Use OpenMP to run in parallel
@@ -116,7 +116,7 @@ int main()
 	auto start3 = chrono::steady_clock::now();
 
 #pragma omp parallel for
-	for (int i = 1; i < data.size(); i++) {
+	for (int i = 1; i < NumberCount; i++) {
 		isPrime3.at(i) = IsPrime(i);
 	}
 
@@ -124,14 +124,14 @@ int main()
 	double elapsed_seconds3 = chrono::duration_cast<
 		chrono::duration<double>>(finish3 - start3).count();
 
-	cout << "Runtime of OpenMP primality check: " << elapsed_seconds3 << endl;
+	cout << "Runtime of OpenMP primality check: " << elapsed_seconds3 << " seconds." << endl;
 
 	// ---------------------------------------------------------------------
 	// Part 4: Test results for consistancy
 	// ---------------------------------------------------------------------
 
 	// Test that results are consistant
-	for (int i = 1; i < data.size(); i++) {
+	for (int i = 1; i < NumberCount; i++) {
 		if ((isPrime1.at(i) != isPrime2.at(i)) || isPrime1.at(i) != isPrime3.at(i)) {
 			cout << "Output values are inconsistant between the runs." << i << ", " << isPrime1.at(i) << ", " << isPrime2.at(i) << ", " << isPrime3.at(i);
 			return -1;
